@@ -1,0 +1,77 @@
+export interface Quote {
+  language: string;
+  region: string;
+  quoteType: string;
+  triggerable: boolean;
+  quoteSourceName: string;
+  regularMarketPreviousClose: number;
+  ask: number;
+  bidSize: number;
+  askSize: number;
+  messageBoardId: string;
+  fullExchangeName: string;
+  longName: string;
+  financialCurrency: string;
+  averageDailyVolume3Month: number;
+  averageDailyVolume10Day: number;
+  fiftyTwoWeekLowChange: number;
+  fiftyTwoWeekLowChangePercent: number;
+  fiftyTwoWeekRange: string;
+  fiftyTwoWeekHighChange: number;
+  dividendDate: number;
+  currency: string;
+  priceHint: number;
+  regularMarketPrice: number;
+  regularMarketTime: number;
+  regularMarketChange: number;
+  regularMarketOpen: number;
+  regularMarketDayHigh: number;
+  regularMarketDayLow: number;
+  regularMarketVolume: number;
+  esgPopulated: boolean;
+  tradeable: boolean;
+  exchange: string;
+  fiftyTwoWeekHighChangePercent: number;
+  fiftyTwoWeekLow: number;
+  fiftyTwoWeekHigh: number;
+  earningsTimestamp: number;
+  earningsTimestampStart: number;
+  earningsTimestampEnd: number;
+  trailingAnnualDividendRate: number;
+  trailingPE: number;
+  trailingAnnualDividendYield: number;
+  epsTrailingTwelveMonths: number;
+  epsForward: number;
+  epsCurrentYear: number;
+  market: string;
+  marketState: string;
+  exchangeDataDelayedBy: number;
+  priceEpsCurrentYear: number;
+  sharesOutstanding: number;
+  bookValue: number;
+  fiftyDayAverage: number;
+  fiftyDayAverageChange: number;
+  fiftyDayAverageChangePercent: number;
+  twoHundredDayAverage: number;
+  twoHundredDayAverageChange: number;
+  twoHundredDayAverageChangePercent: number;
+  marketCap: number;
+  forwardPE: number;
+  priceToBook: number;
+  sourceInterval: number;
+  exchangeTimezoneName: string;
+  exchangeTimezoneShortName: string;
+  regularMarketChangePercent: number;
+  regularMarketDayRange: string;
+  bid: number;
+  shortName: string;
+  gmtOffSetMilliseconds: number;
+  symbol: string;
+}
+
+export interface FindQuotesResponse {
+  quoteResponse: {
+    result: Quote[];
+    error?: any;
+  };
+}
