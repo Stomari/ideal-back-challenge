@@ -20,7 +20,7 @@ export class UserService {
     // checks if symbols exists
     const quote = await this.quoteService.findQuotes(symbol);
 
-    if (!quote.quoteResponse.result.length) {
+    if (!quote.length) {
       throw new BadRequestException('Asset not found!');
     }
 
@@ -35,5 +35,44 @@ export class UserService {
     }
 
     return update;
+  }
+
+  async getUserAssets(user: string) {
+    const dbResult = await this.userModel.findOne({ name: user });
+
+    if (!dbResult) {
+      throw new BadRequestException('User not found!');
+    }
+
+    const assetsData = this.fetchQuotes(dbResult.assets);
+
+    return assetsData;
+  }
+
+  /**
+   * Receives a list of assets from the user and returns them with data
+   */
+  private async fetchQuotes(assets: string[]) {
+    // split assets in chunks of 10 since the quotes api has a max of 10 items
+    const chunks = Array.from(
+      { length: Math.ceil(assets.length / 10) },
+      (elem, index) => assets.slice(index * 10, index * 10 + 10),
+    );
+
+    const assetsWithData = [];
+
+    // create promises array for Promise.all
+    const promises = chunks.map((elem) =>
+      this.quoteService.findQuotes(elem.join()),
+    );
+
+    // pull all data and push the assets to a new array
+    await Promise.all(promises).then((result) => {
+      result.forEach((elem) => {
+        assetsWithData.push(...elem);
+      });
+    });
+
+    return assetsWithData;
   }
 }

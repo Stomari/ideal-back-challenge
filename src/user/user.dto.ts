@@ -1,5 +1,11 @@
 import { IsNotEmpty, IsString } from 'class-validator';
 
+export class GetUserAssetsDto {
+  @IsString()
+  @IsNotEmpty()
+  user: string;
+}
+
 export class CreateUserDto {
   @IsString()
   @IsNotEmpty()
