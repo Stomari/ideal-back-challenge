@@ -1,5 +1,7 @@
 import { HttpModule, HttpModuleAsyncOptions } from '@nestjs/axios';
 import { Global, Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import { MongooseModule } from '@nestjs/mongoose';
 
 const httpModuleOptions: HttpModuleAsyncOptions = {
   useFactory: () => ({
@@ -12,7 +14,11 @@ const httpModuleOptions: HttpModuleAsyncOptions = {
 
 @Global()
 @Module({
-  imports: [HttpModule.registerAsync(httpModuleOptions)],
+  imports: [
+    ConfigModule.forRoot(),
+    MongooseModule.forRoot('mongodb://localhost:27017/ideal-back-challenge'),
+    HttpModule.registerAsync(httpModuleOptions),
+  ],
   exports: [HttpModule],
 })
 export class GlobalModule {}
