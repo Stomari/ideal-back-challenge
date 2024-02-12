@@ -3,6 +3,7 @@ import { QuoteService } from '../quote/quote.service';
 import { InjectModel } from '@nestjs/mongoose';
 import { User } from './schemas/user.schema';
 import { Model } from 'mongoose';
+import { Quote } from '../quote/quote.interface';
 
 @Injectable()
 export class UserService {
@@ -37,14 +38,22 @@ export class UserService {
     return update;
   }
 
-  async getUserAssets(user: string) {
+  async getUserAssets(
+    user: string,
+    sort?: 'price' | 'alphabetical',
+    direction?: 'asc' | 'desc',
+  ) {
     const dbResult = await this.userModel.findOne({ name: user });
 
     if (!dbResult) {
       throw new BadRequestException('User not found!');
     }
 
-    const assetsData = this.fetchQuotes(dbResult.assets);
+    const assetsData = await this.fetchQuotes(dbResult.assets);
+
+    if (sort) {
+      this.sortAssets(assetsData, sort, direction);
+    }
 
     return assetsData;
   }
@@ -74,5 +83,28 @@ export class UserService {
     });
 
     return assetsWithData;
+  }
+
+  private sortAssets(
+    assets: Quote[],
+    sort: 'price' | 'alphabetical',
+    direction?: 'asc' | 'desc',
+  ) {
+    if (sort === 'alphabetical') {
+      if (!direction || direction === 'asc') {
+        assets.sort((a, b) => a.symbol.localeCompare(b.symbol));
+        return;
+      }
+      assets.sort((a, b) => b.symbol.localeCompare(a.symbol));
+      return;
+    }
+    if (sort === 'price') {
+      if (!direction || direction === 'asc') {
+        assets.sort((a, b) => a.bid - b.bid);
+        return;
+      }
+      assets.sort((a, b) => b.bid - a.bid);
+      return;
+    }
   }
 }

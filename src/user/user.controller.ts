@@ -8,8 +8,8 @@ export class UserController {
 
   @Get()
   async getUserAssets(@Query() getUserAssetsDto: GetUserAssetsDto) {
-    const { user } = getUserAssetsDto;
-    return this.userService.getUserAssets(user);
+    const { user, direction, sort } = getUserAssetsDto;
+    return this.userService.getUserAssets(user, sort, direction);
   }
 
   @Post()

@@ -1,9 +1,17 @@
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsIn, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class GetUserAssetsDto {
   @IsString()
   @IsNotEmpty()
   user: string;
+
+  @IsIn(['price', 'alphabetical'])
+  @IsOptional()
+  sort?: 'price' | 'alphabetical';
+
+  @IsIn(['asc', 'desc'])
+  @IsOptional()
+  direction?: 'asc' | 'desc';
 }
 
 export class CreateUserDto {
