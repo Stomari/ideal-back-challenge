@@ -1,7 +1,7 @@
 import { HttpModule, HttpModuleAsyncOptions } from '@nestjs/axios';
 import { Global, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { MongooseModule } from '@nestjs/mongoose';
+import { MongooseModule, MongooseModuleAsyncOptions } from '@nestjs/mongoose';
 
 const httpModuleOptions: HttpModuleAsyncOptions = {
   useFactory: () => ({
@@ -12,11 +12,17 @@ const httpModuleOptions: HttpModuleAsyncOptions = {
   }),
 };
 
+const mongooseModuleOptions: MongooseModuleAsyncOptions = {
+  useFactory: () => ({
+    uri: process.env.MONGODB_URI,
+  }),
+};
+
 @Global()
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    MongooseModule.forRoot('mongodb://localhost:27017/ideal-back-challenge'),
+    MongooseModule.forRootAsync(mongooseModuleOptions),
     HttpModule.registerAsync(httpModuleOptions),
   ],
   exports: [HttpModule],
