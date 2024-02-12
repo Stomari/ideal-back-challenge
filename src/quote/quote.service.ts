@@ -9,7 +9,7 @@ export class QuoteService {
   private readonly logger = new Logger(QuoteService.name);
   constructor(private readonly httpService: HttpService) {}
 
-  async findQuotes(symbols: string): Promise<FindQuotesResponse> {
+  async findQuotes(symbols: string) {
     const { data } = await firstValueFrom(
       this.httpService
         .get<FindQuotesResponse>('/finance/quote', {
@@ -26,6 +26,6 @@ export class QuoteService {
           }),
         ),
     );
-    return data;
+    return data.quoteResponse.result;
   }
 }
