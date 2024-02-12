@@ -3,7 +3,7 @@ import { QuoteService } from '../quote/quote.service';
 import { InjectModel } from '@nestjs/mongoose';
 import { User } from './schemas/user.schema';
 import { Model } from 'mongoose';
-import { Quote } from '../quote/quote.interface';
+import { Quote } from '../quote/entities/quote.entity';
 
 @Injectable()
 export class UserService {
@@ -68,7 +68,7 @@ export class UserService {
       (elem, index) => assets.slice(index * 10, index * 10 + 10),
     );
 
-    const assetsWithData = [];
+    const assetsWithData: Quote[] = [];
 
     // create promises array for Promise.all
     const promises = chunks.map((elem) =>

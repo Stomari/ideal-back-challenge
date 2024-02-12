@@ -1,4 +1,4 @@
-export interface Quote {
+export class Quote {
   language: string;
   region: string;
   quoteType: string;
@@ -69,7 +69,7 @@ export interface Quote {
   symbol: string;
 }
 
-export interface FindQuotesResponse {
+export class FindQuotesResponse {
   quoteResponse: {
     result: Quote[];
     error?: any;

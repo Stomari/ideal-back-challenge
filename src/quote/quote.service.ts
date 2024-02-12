@@ -2,7 +2,7 @@ import { HttpService } from '@nestjs/axios';
 import { Injectable, Logger } from '@nestjs/common';
 import { AxiosError } from 'axios';
 import { catchError, firstValueFrom } from 'rxjs';
-import { FindQuotesResponse } from './quote.interface';
+import { FindQuotesResponse } from './entities/quote.entity';
 
 @Injectable()
 export class QuoteService {
