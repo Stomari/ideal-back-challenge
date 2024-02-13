@@ -107,4 +107,22 @@ export class UserService {
       return;
     }
   }
+
+  async changeAssetOrder(user: string, indexFrom: number, indexTo: number) {
+    const userDb = await this.userModel.findOne({ name: user });
+
+    // Throw error if indexes are greater than the array length - 1
+    if (
+      indexFrom > userDb.assets.length - 1 ||
+      indexTo > userDb.assets.length - 1
+    ) {
+      throw new BadRequestException('Indexes must not exceed array length - 1');
+    }
+
+    const newArray = [...userDb.assets];
+    const removedItem = newArray.splice(indexFrom, 1)[0];
+    newArray.splice(indexTo, 0, removedItem);
+    userDb.assets = newArray;
+    return userDb.save();
+  }
 }

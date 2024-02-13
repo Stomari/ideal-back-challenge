@@ -1,6 +1,11 @@
-import { Body, Controller, Post, Get, Query } from '@nestjs/common';
+import { Body, Controller, Post, Get, Query, Put } from '@nestjs/common';
 import { UserService } from './user.service';
-import { AddAssetDto, CreateUserDto, GetUserAssetsDto } from './dto/user.dto';
+import {
+  AddAssetDto,
+  ChangeAssetOrderDto,
+  CreateUserDto,
+  GetUserAssetsDto,
+} from './dto/user.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { User } from './entities/user.entity';
 
@@ -33,5 +38,14 @@ export class UserController {
   async addAsset(@Body() addAssetDto: AddAssetDto): Promise<User> {
     const { user, symbol } = addAssetDto;
     return this.userService.addAsset(user, symbol);
+  }
+
+  @Put('asset/order')
+  @ApiOperation({ summary: 'Change the order of one asset on user asset list' })
+  async changeAssetOrder(
+    @Body() changeAssetOrderDto: ChangeAssetOrderDto,
+  ): Promise<User> {
+    const { user, indexFrom, indexTo } = changeAssetOrderDto;
+    return this.userService.changeAssetOrder(user, indexFrom, indexTo);
   }
 }

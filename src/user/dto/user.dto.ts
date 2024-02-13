@@ -1,5 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsIn, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import {
+  IsIn,
+  IsInt,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  Min,
+} from 'class-validator';
 
 export class GetUserAssetsDto {
   @IsString()
@@ -33,4 +40,23 @@ export class AddAssetDto {
   @IsNotEmpty()
   @ApiProperty({ description: 'Stock symbol' })
   symbol: string;
+}
+
+export class ChangeAssetOrderDto {
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty({ description: 'User which you want to modify' })
+  user: string;
+
+  @IsInt()
+  @Min(0)
+  @IsNotEmpty()
+  @ApiProperty({ description: 'Asset index that you want to move' })
+  indexFrom: number;
+
+  @IsInt()
+  @Min(0)
+  @IsNotEmpty()
+  @ApiProperty({ description: 'Index that you want the asset to go' })
+  indexTo: number;
 }
