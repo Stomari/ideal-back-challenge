@@ -17,7 +17,6 @@ describe('QuoteService', () => {
 
     quoteService = module.get<QuoteService>(QuoteService);
     httpService = module.get<HttpService>(HttpService);
-    jest.useFakeTimers();
   });
 
   it('should be defined', () => {

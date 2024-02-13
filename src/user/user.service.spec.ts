@@ -184,4 +184,21 @@ describe('UserService', () => {
       expect(error.message).toMatch('User not found!');
     }
   });
+
+  it('should change asset order', async () => {
+    jest.spyOn(userModel, 'findOne').mockImplementation(
+      () =>
+        ({
+          name: 'John Doe',
+          assets: ['AAPL', 'GOOGL', 'TSLA', 'AAP'],
+          save() {
+            return this;
+          },
+        }) as any,
+    );
+
+    const result = await userService.changeAssetOrder('John Doe', 0, 3);
+
+    expect(result.assets).toEqual(['GOOGL', 'TSLA', 'AAP', 'AAPL']);
+  });
 });

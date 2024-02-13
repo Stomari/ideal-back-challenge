@@ -3,7 +3,12 @@ import { UserController } from './user.controller';
 import { UserService } from './user.service';
 import { getModelToken } from '@nestjs/mongoose';
 import { User } from './schemas/user.schema';
-import { AddAssetDto, CreateUserDto, GetUserAssetsDto } from './dto/user.dto';
+import {
+  AddAssetDto,
+  ChangeAssetOrderDto,
+  CreateUserDto,
+  GetUserAssetsDto,
+} from './dto/user.dto';
 import { GlobalModule } from '../global/global.module';
 import { QuoteService } from '../quote/quote.service';
 
@@ -37,6 +42,7 @@ describe('UserController', () => {
             getUserAssets: jest.fn().mockResolvedValue({}),
             createUser: jest.fn().mockResolvedValue({}),
             addAsset: jest.fn().mockResolvedValue({}),
+            changeAssetOrder: jest.fn().mockResolvedValue({}),
           };
         }
         if (token === GlobalModule || token === QuoteService) {
@@ -94,5 +100,23 @@ describe('UserController', () => {
     await controller.addAsset(mockParam);
 
     expect(spy).toHaveBeenCalledWith(mockParam.user, mockParam.symbol);
+  });
+
+  it('should call changeAssetOrder', async () => {
+    const spy = jest.spyOn(userService, 'changeAssetOrder');
+
+    const mockParam: ChangeAssetOrderDto = {
+      user: 'John Doe',
+      indexFrom: 0,
+      indexTo: 3,
+    };
+
+    await controller.changeAssetOrder(mockParam);
+
+    expect(spy).toHaveBeenCalledWith(
+      mockParam.user,
+      mockParam.indexFrom,
+      mockParam.indexTo,
+    );
   });
 });
