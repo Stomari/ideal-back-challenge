@@ -13,8 +13,8 @@ export class UserService {
   ) {}
 
   async createUser(user: string) {
-    const model = new this.userModel({ name: user, assets: [] });
-    return model.save();
+    const createdUser = await this.userModel.create({ name: user, assets: [] });
+    return createdUser;
   }
 
   async addAsset(user: string, symbol: string) {
