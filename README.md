@@ -1,4 +1,4 @@
-# Ideal Backend Challenge
+# Nest Backend Challenge
 
 ## Description
 
