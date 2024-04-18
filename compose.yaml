@@ -1,0 +1,18 @@
+version: "3.9"
+
+services:
+  nest-app:
+    build: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongodb
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017/nest
+      - API_KEY=${API_KEY}
+
+
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27018:27017"

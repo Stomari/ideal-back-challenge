@@ -30,6 +30,17 @@ $ npm install
 $ npm run start
 ```
 
+## Running with Docker
+
+Alternatively, you can run with Docker.
+
+- Make sure you have Docker installed in your machine
+- Run the following:
+
+```bash
+$ npm run docker
+```
+
 ## Documentation - Swagger
 
 With the app running, navigate to http://localhost:3000/api on your browser.
